@@ -67,7 +67,7 @@ You	can now run queries to select samples
 
 There are two functions for creating presets, make_default_drum_rack & make_drum_rack.
 
-make_default_drum_rack creates a Drum Rack that resembles the default Drum Rack presets (16 pads) and the ones you download from Ableton's website. 
+`make_default_drum_rack` creates a Drum Rack that resembles the default Drum Rack presets (16 pads) and the ones you download from Ableton's website. 
 Pads are postioned accordingly to fit midi presets. The samples loaded try to match the generic type of the default samples.
 ![Image 2](./pics/defaultsetup.PNG)	
 
@@ -120,7 +120,7 @@ Additional info for make_default_drum_rack.
 	)
 	"""
 	
-make_drum_rack basically just fills the pads with random samples from a given query. You can specify the amount of pads, and the starting pad. Max pads is 128. 
+`make_drum_rack` basically just fills the pads with random samples from a given query. You can specify the amount of pads, and the starting pad. Max pads is 128. 
 
 	# Get all samples that contain the string 'perc'.
 	samples = query("SELECT * FROM SAMPLE_PATHS WHERE SAMPLE_NAME IS LIKE '%perc%'")

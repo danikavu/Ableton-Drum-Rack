@@ -103,7 +103,7 @@ Example for replacing the key word in the first pad
 	
 To create the preset.
 
-	# Select options. In the example below we select all the samples in the Splice folder.
+	# Select options. In the example below we select all the samples in the Splice folder. (Assuming you have a folder called Splice)
 	samples = query("SELECT * FROM SAMPLE_PATHS WHERE FULL_PATH_NAME IS LIKE '%splice%'")
 	# Provide sample set and filename. Can be called without arguments.
 	rack.make_default_drum_rack(samples, fname='python_test_preset')
@@ -150,7 +150,7 @@ To add a folder to the database use the add_new_samples() function.
 	
 ### Updating sample Frames and Length
 
-With this poor implementation you can update sample frames and length using the 'update_sample_details()' function. It uses the soundfile module. The problem here is time. Depending on computer and amount of samples this can take ages.
+With this poor implementation you can update sample frames and length using the `update_sample_details()` function. It uses the soundfile module. The problem here is time. Depending on computer and amount of samples this can take ages.
 I suggest you update partially by folder and not the whole database at once. Alternative option is to set loginfo to True and update the data for the samples at creation of preset.
 
 Update frames and length columns. (Frames for the Ableton '.adg' files, Length for queries)
@@ -166,7 +166,7 @@ Interrupting the update query should have no serious effect. It will continue up
 
 Further on you can use the LENGTH column for sample sets. With length you can filter out loops and very long samples for example.
 
-	samples = query("SELECT *FROM SAMPLE_PATHS WHERE FULL_FILE_PATH LIKE '%splice%' and LENGTH < 1")
+	samples = query("SELECT *FROM SAMPLE_PATHS WHERE LENGTH < 1")
 	
 	rack.make_default_drum_rack(samples, fname='python_test_length_preset')
 	

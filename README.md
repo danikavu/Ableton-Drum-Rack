@@ -3,7 +3,7 @@
 This module creates Drum Rack presets for [Ableton Live 11](https://www.ableton.com/en/live/)
 
 It creates a database of samples from a given path and utilizes SQL queries to generate sample sets for the Drum Rack. 
-You can specify folders, keywords and sample duration (If samples are analyzed). Sample choices are based purely on strings searches at the moment. Ex 'kick' will match any sample the contains the word kick.
+You can specify folders, keywords and sample duration (If samples are analyzed). Sample choices are based purely on strings searches at the moment. Ex. 'kick' will match any sample the contains the word kick.
 
 ### Requirements
 
@@ -38,7 +38,7 @@ Python 3.7 or higher. (Should also work with previous versions, but tested have 
 
 You only need to create the database once. This should not take long. (Less than 1 min 373k samples)
 
-To create a sample database you need to provide the path to your samples folder. More specifically the ones you add via Ableton. Image below.
+To create a sample database you need to provide the path to your samples folder. More specifically the ones you add via Ableton. Image below. (DRUM_SAMPLES_GIANT contains all my sample folders within for example)
 ![Image 1](./pics/directory.PNG)
 
 The database `ableton_samples.db` is created in the User folder. The table of the database is called SAMPLE_PATHS

@@ -20,7 +20,7 @@ def write_adg(blank, fname, path):
     os.remove(fname + '.xml')
 
 
-def create_xml(_samples, _pad, choke):
+def create_xml(_samples, _pad, choke, transpose):
     """
         Creates the xml for the samples and adds them to the empty drum rack.
         Ableton files as it seems are all xml.
@@ -30,6 +30,7 @@ def create_xml(_samples, _pad, choke):
     blank_root = blank.getroot()
     # Default Choke set to 1.
     _choke = 1
+    _tpose = 0
     # Set all the needed values for the adg file not to be corrupt.
     # Filename, File paths, Duration, Size.
     for name, nrp, fp, bp, dur, sz in _samples:
@@ -42,6 +43,9 @@ def create_xml(_samples, _pad, choke):
         r.findall('.//ZoneSettings//ReceivingNote')[0].attrib['Value'] = str(_pad)
         # Choke option.
         r.findall('.//ZoneSettings//ChokeGroup')[0].attrib['Value'] = str(_choke)
+        # Transpose
+        r.findall('.//TransposeKey//Manual')[0].attrib['Value'] = str(transpose[_tpose])
+        _tpose += 1
         # Sample name.
         r.findall('.//MultiSamplePart//Name')[0].attrib['Value'] = name
         # Filepath.

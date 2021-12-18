@@ -76,22 +76,22 @@ The key search words can be accessed and modified in the variable rack.default_p
 	# Default Pad Setup
 	rack.default_pads
 	"""
-	{'pad1': 'kick',
-	 'pad2': 'perc|clap|rim|snap',
-	 'pad3': 'snare',
-	 'pad4': 'perc|clap|snare',
-	 'pad5': 'snare',
-	 'pad6': 'bass|808',
-	 'pad7': '^(?=.*hi)(?=.*hat)',
-	 'pad8': 'bass|808|sub',
-	 'pad9': '^(?=.*hi)(?=.*hat)',
-	 'pad10': 'fx|synth|stab',
-	 'pad11': '^(?=.*open)(?=.*hat)',
-	 'pad12': 'tom',
-	 'pad13': 'bass',
-	 'pad14': 'fx|synth|stab',
-	 'pad15': 'fx|synth|stab',
-	 'pad16': 'fx|synth|stab'}
+	{'pad1': {'sample': 'kick', 'transpose': 0},
+	 'pad2': {'sample': 'perc|clap|rim|snap', 'transpose': 0},
+	 'pad3': {'sample': 'snare', 'transpose': 0},
+	 'pad4': {'sample': 'perc|clap|snare', 'transpose': 0},
+	 'pad5': {'sample': 'snare', 'transpose': 0},
+	 'pad6': {'sample': 'bass|808', 'transpose': 0},
+	 'pad7': {'sample': '^(?=.*closed)(?=.*hat)', 'transpose': 0},
+	 'pad8': {'sample': 'sub', 'transpose': 0},
+	 'pad9': {'sample': '^(?=.*hi)(?=.*hat)', 'transpose': 0},
+	 'pad10': {'sample': 'fx|synth|stab', 'transpose': 0},
+	 'pad11': {'sample': '^(?=.*open)(?=.*hat)', 'transpose': 0},
+	 'pad12': {'sample': 'tom', 'transpose': 0},
+	 'pad13': {'sample': 'bass', 'transpose': 0},
+	 'pad14': {'sample': 'fx|synth|stab', 'transpose': 0},
+	 'pad15': {'sample': 'fx|synth|stab', 'transpose': 0},
+	 'pad16': {'sample': 'fx|synth|stab', 'transpose': 0}}
 	 """
 	 
 The key words can be single strings, a combination of strings using the or '|' operator, or in regex format. (Pandas Dataframe search)
@@ -99,7 +99,10 @@ The key words can be single strings, a combination of strings using the or '|' o
 Example for replacing the key word in the first pad
 
 	# Replace kick for bass in pad 1.
-	rack.default_pads['pad1'] = 'bass'
+	rack.default_pads['pad1']['sample'] = 'bass'
+
+	# To change transpose value of pad 1
+	rack.default_pads['pad1']['transpose'] = 5
 	
 To create the preset.
 
@@ -138,6 +141,7 @@ Additional info for make_drum_rack.
     pad=128, # Default Starting 128. the left-most lowest pad. 
     loginfo=False, # If loginfo is set to True frames and length of sample will be updated in the database.
     choke=False, # If choke is set to True samples will not override each other.
+	random_transpose=False, # If set to true tranpose will be randomized between the values of -12 and 12 (You can edit the range by changing the values in rack.rand_transpose)
 	)
 	"""
 	
@@ -174,3 +178,9 @@ Further on you can use the LENGTH column for sample sets. With length you can fi
 
 - Optimize
 - Maybe add more parameters for editing the '.adg' file
+
+### Updates
+
+1.0.1
+	- Change transpose values of samples added.
+	- When no sample set provide default query will select only supported files.

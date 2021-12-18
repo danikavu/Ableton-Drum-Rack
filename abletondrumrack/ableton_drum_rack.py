@@ -11,22 +11,22 @@ from .adg import *
 SYS_RAND = random.SystemRandom()
 # Default Drum Rack pad setup.
 DEFAULT_PADS = {
-    'pad1': 'kick',
-    'pad2': '|'.join(['perc', 'clap', 'rim', 'snap']),
-    'pad3': 'snare',
-    'pad4': '|'.join(['perc', 'clap', 'snare']),
-    'pad5': 'snare',
-    'pad6': '|'.join(['bass', '808']),
-    'pad7': r'^(?=.*hi)(?=.*hat)',
-    'pad8': '|'.join(['bass', '808','sub']),
-    'pad9': r'^(?=.*hi)(?=.*hat)',
-    'pad10': '|'.join(['fx', 'synth', 'stab']),
-    'pad11': r'^(?=.*open)(?=.*hat)',
-    'pad12': 'tom',
-    'pad13': 'bass',
-    'pad14': '|'.join(['fx', 'synth', 'stab']),
-    'pad15': '|'.join(['fx', 'synth', 'stab']),
-    'pad16': '|'.join(['fx', 'synth', 'stab']),
+    'pad1': {'sample': 'kick', 'transpose': 0},
+    'pad2': {'sample': '|'.join(['perc', 'clap', 'rim', 'snap']), 'transpose': 0},
+    'pad3': {'sample': 'snare', 'transpose': 0},
+    'pad4': {'sample': '|'.join(['perc', 'clap', 'snare']), 'transpose': 0},
+    'pad5': {'sample': 'snare', 'transpose': 0},
+    'pad6': {'sample': '|'.join(['bass', '808']), 'transpose': 0},
+    'pad7': {'sample': r'^(?=.*closed)(?=.*hat)', 'transpose': 0},
+    'pad8': {'sample': 'sub', 'transpose': 0},
+    'pad9': {'sample': r'^(?=.*hi)(?=.*hat)', 'transpose': 0},
+    'pad10': {'sample': '|'.join(['fx', 'synth', 'stab']), 'transpose': 0},
+    'pad11': {'sample': r'^(?=.*open)(?=.*hat)', 'transpose': 0},
+    'pad12': {'sample': 'tom', 'transpose': 0},
+    'pad13': {'sample': 'bass', 'transpose': 0},
+    'pad14': {'sample': '|'.join(['fx', 'synth', 'stab']), 'transpose': 0},
+    'pad15': {'sample': '|'.join(['fx', 'synth', 'stab']), 'transpose': 0},
+    'pad16': {'sample': '|'.join(['fx', 'synth', 'stab']), 'transpose': 0},
 }
 
 
@@ -34,6 +34,7 @@ class DrumRack:
 
     save_path = os.path.expanduser("~")
     default_pads = DEFAULT_PADS
+    rand_transpose = [-12, 12]
 
     def __init__(self):
         pass
@@ -76,7 +77,7 @@ class DrumRack:
         return new_sample_name, new_relative_path_samples, new_path_samples, new_browser_content_path, new_duration, new_file_size  
 
 
-    def make_drum_rack(self, samples, slots=16, fname=False, pad=128, loginfo=False, choke=False):
+    def make_drum_rack(self, samples, slots=16, fname=False, pad=128, loginfo=False, choke=False, random_transpose=False):
         """
             Makes a Drum Rack. 
             User can specify number of pads to fill.
@@ -92,7 +93,12 @@ class DrumRack:
         n_name, n_rel_path, n_f_path, n_browser, n_duration, n_filesize = self.new_samples(random_samples, samples, loginfo)
         _samples = list(zip(n_name, n_rel_path, n_f_path, n_browser, n_duration, n_filesize))
         
-        blank = create_xml(_samples, pad, choke)
+        if random_transpose:
+            transpose = [SYS_RAND.randint(self.rand_transpose[0], self.rand_transpose[1]) for x in range(slots)]
+        else:
+            transpose = [0 for x in range(slots)]
+        
+        blank = create_xml(_samples, pad, choke, transpose)
         
         if not fname:
             fname = 'python_drum_rack'
@@ -109,7 +115,7 @@ class DrumRack:
         """
         
         if samples is None:
-            _query = "SELECT * FROM SAMPLE_PATHS WHERE SUPPORTED IS NULL"
+            _query = "select * from SAMPLE_PATHS WHERE SUPPORTED != 0"   
             sample_types = query(_query)
         else:
             sample_types = samples
@@ -118,7 +124,7 @@ class DrumRack:
         
         random_samples = []
         for rack_pad in self.default_pads.items():
-            _samples_ = list(sample_types.loc[sample_types['SAMPLE_NAME'].str.contains('{}'.format(rack_pad[1]), case=False)].index)
+            _samples_ = list(sample_types.loc[sample_types['SAMPLE_NAME'].str.contains('{}'.format(self.default_pads[rack_pad[0]]['sample']), case=False)].index)
             if not _samples_:
                 random_samples.append(SYS_RAND.choice(sample_types.index))
             else:
@@ -126,8 +132,10 @@ class DrumRack:
 
         n_name, n_rel_path, n_f_path, n_browser, n_duration, n_filesize = self.new_samples(random_samples, sample_types, loginfo)
         _samples = list(zip(n_name, n_rel_path, n_f_path, n_browser, n_duration, n_filesize))
-
-        blank = create_xml(_samples, pad, choke)
+        
+        transpose = [self.default_pads[x]['transpose'] for x in self.default_pads]
+        
+        blank = create_xml(_samples, pad, choke, transpose)
         
         if not fname:
             fname = 'python_drum_rack_def'

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name='abletondrumrack',
-	version='1.0.0',
+	version='1.0.1',
 	author='Daniel Kavoulakos',
 	author_email='dan_kavoulakos@hotmail.com',
 	description='Create Ableton Live 11 Drum Rack presets.',

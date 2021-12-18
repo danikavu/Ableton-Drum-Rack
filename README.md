@@ -68,7 +68,7 @@ You	can now run queries to select samples
 There are two functions for creating presets, make_default_drum_rack & make_drum_rack.
 
 `make_default_drum_rack` creates a Drum Rack that resembles the default Drum Rack presets (16 pads) and the ones you download from Ableton's website. 
-Pads are postioned accordingly to fit midi presets. The samples loaded try to match the generic type of the default samples.
+Pads are positioned accordingly to fit midi presets. The samples loaded try to match the generic type of the default samples.
 ![Image 2](./pics/defaultsetup.PNG)	
 
 The key search words can be accessed and modified in the variable rack.default_pads in dictionary format.
@@ -184,3 +184,4 @@ Further on you can use the LENGTH column for sample sets. With length you can fi
 1.0.1
 	- Change transpose values of samples added.
 	- When no sample set provide default query will select only supported files.
+

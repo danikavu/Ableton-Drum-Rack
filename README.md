@@ -13,6 +13,10 @@ Python 3.7 or higher. (Should also work with previous versions, but tested have 
 
 ### Installation
 
+	pip install git+https://github.com/danikavu/Ableton-Drum-Rack.git
+	
+or	
+
 1 - Clone this repo.
 
 2 - Inside repo folder run commands below

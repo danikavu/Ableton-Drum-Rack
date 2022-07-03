@@ -13,19 +13,11 @@ Python 3.7 or higher. (Should also work with previous versions, but tested have 
 
 ### Installation
 
+	pip install abletondrumrack
+	
+or
+
 	pip install git+https://github.com/danikavu/Ableton-Drum-Rack.git
-	
-or	
-
-1 - Clone this repo.
-
-2 - Inside repo folder run commands below
-
-	python setup.py bdist_wheel
-	
-3 - Inside generated dist folder run 
-
-	pip install abletondrumrack-1.0.0-py3-none-any.whl
 	
 
 ### Usage
